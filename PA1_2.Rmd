@@ -31,6 +31,8 @@ hist(stepsday$x, xlab= "Total steps per day", main = "Total number of steps take
 
 Fig. 1. The average total number of steps taken per day by an individual in October and November 2012
 
+
+
 ```{r stepsperdayaverages }
 mean<-as.integer(mean(stepsday$x, na.rm=TRUE))
 median<-median(stepsday$x, na.rm = TRUE)
@@ -39,19 +41,11 @@ median<-median(stepsday$x, na.rm = TRUE)
 The mean total steps per day is `r mean`, while the median is very similar with `r median` steps per day 
 
 **3.What is the average daily activity pattern?** 
+
 ```{r stepsperinterval }
 stepsinterval<-aggregate(activityext[,-2], list(Interval=activityext$interval), FUN=mean, na.rm=TRUE)
-plot(stepsinterval$steps~stepsinterval$newtime, type="l", xlab="Time (0:00-23:59)", ylab= "Steps per 5 minutes", main = "Average number of steps per 5 minutes during the day", col="blue", lwd=2)
 ```
 
-Fig. 2. The average numer of steps per 5 minute interval over the course of the day
-
-```{r stepsperintervalaverages }
-maxint<-which.max(stepsinterval$steps)
-time<-paste0(as.integer(maxint*5/60),":",(maxint*5)%%60)
-```
-
-The most active 5 minute time interval during the day is interval `r maxint`, which is at `r time` 
 
 **4. Imputing missing values**
 
