@@ -24,7 +24,7 @@ At `r dataDownloaded` the data were downloaded from `r fileurl` and manually ext
 
 
 **2. What is the mean total number of steps taken per day?**
-```{r stepsperday }
+```{r stepsperday}
 stepsday<-aggregate(activity$steps, list(Date=activity$date), FUN=sum)
 hist(stepsday$x, xlab= "Total steps per day", main = "Total number of steps taken per day", breaks = 10, col = "lightblue")
 ```
@@ -33,7 +33,7 @@ Fig. 1. The average total number of steps taken per day by an individual in Octo
 
 
 
-```{r stepsperdayaverages }
+```{r stepsperdayaverages}
 mean<-as.integer(mean(stepsday$x, na.rm=TRUE))
 median<-median(stepsday$x, na.rm = TRUE)
 ```
@@ -42,8 +42,10 @@ The mean total steps per day is `r mean`, while the median is very similar with 
 
 **3.What is the average daily activity pattern?** 
 
-```{r stepsperinterval }
+```{r stepsperinterval}
 stepsinterval<-aggregate(activityext[,-2], list(Interval=activityext$interval), FUN=mean, na.rm=TRUE)
+plot(stepsinterval$steps~stepsinterval$newtime, type="l", xlab="Time (0:00-23:59)", ylab= "Steps per 5 minutes", main = "Average number of steps per 5 minutes during the day", col="blue", lwd=2)
+
 ```
 
 
@@ -69,14 +71,14 @@ for (i in 1:length(activityext$steps)){
 }
 ```
 
-```{r hist new dataset}
+```{r histnewdataset}
 stepsdayimputed<-aggregate(newdata, list(Date=activity$date), FUN=sum)
 hist(stepsdayimputed$x, xlab= "Total steps per day", main = "Total number of steps taken per day with imputed values", breaks = 10, col = "lightgreen")
 ```
 
 Fig. 3. The total number of steps per day, as figure 1, only now including imputed values for those that were missing earlier
 
-```{r new dataset averages}
+```{r newdatasetaverages}
 meanimp<-as.integer(mean(stepsdayimputed$x))
 medianimp<-as.integer(median(stepsdayimputed$x))
 ```
@@ -99,7 +101,7 @@ for (i in 1:length(activity$date)){
 brandnewdata<-cbind(activityext, newdata, weekd)
 ```
 
-```{r intervaldataset with weekdays}
+```{r intervaldatasetwithweekdays}
 stepsintervalweek<-aggregate(brandnewdata[,-c(1,2,6)], list(Interval=brandnewdata$interval, daytyp=(brandnewdata$weekd=="weekday")), mean)
 library(plyr)
 stepsintervalweek$daytyp<-revalue(as.factor(stepsintervalweek$daytyp), 
